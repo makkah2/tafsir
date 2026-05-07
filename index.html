@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>منهج التدبر في آيات القرآن الكريم</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --gold:#C9A84C;--gold-light:#E8C97A;--gold-dim:#8B6E2E;
+  --ink:#1A1208;--parchment:#F5EDD8;--cream:#FAF5E9;
+  --green:rgba(27,94,66,.35);--green-ico:rgba(27,94,66,.6);
+  --rust:rgba(139,58,26,.35);--rust-ico:rgba(139,58,26,.6);
+}
+body{font-family:'Cairo',sans-serif;background:var(--ink);color:var(--parchment);min-height:100vh;direction:rtl;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(ellipse at 20% 20%,rgba(201,168,76,.07) 0%,transparent 55%),
+             radial-gradient(ellipse at 80% 80%,rgba(27,94,66,.09) 0%,transparent 55%)}
+.wrap{max-width:840px;margin:0 auto;padding:0 18px;position:relative;z-index:1}
+
+/* header */
+.header{text-align:center;padding:50px 0 32px}
+.bismillah{font-family:'Amiri',serif;font-size:1.9rem;color:var(--gold);margin-bottom:20px}
+h1{font-family:'Amiri',serif;font-size:clamp(1.55rem,4vw,2.55rem);color:var(--gold);line-height:1.5;margin-bottom:7px}
+.sub{color:#E8D9B8;font-size:.85rem;letter-spacing:2px}
+
+/* scholars */
+.scholars{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-bottom:28px}
+.stag{background:rgba(201,168,76,.09);border:1px solid rgba(201,168,76,.24);border-radius:20px;padding:4px 13px;font-size:.77rem;color:var(--gold-light)}
+
+/* input box */
+.inbox{background:linear-gradient(135deg,rgba(201,168,76,.07),rgba(27,94,66,.05));border:1px solid rgba(201,168,76,.3);border-radius:15px;padding:26px;margin-bottom:24px}
+.inbox-lbl{font-size:.73rem;color:var(--gold);letter-spacing:3px;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.inbox-lbl::after{content:'';flex:1;height:1px;background:linear-gradient(to left,transparent,rgba(201,168,76,.35))}
+textarea{width:100%;background:rgba(26,18,8,.65);border:1px solid rgba(201,168,76,.2);border-radius:10px;padding:15px;color:var(--parchment);font-family:'Amiri',serif;font-size:1.3rem;line-height:2;resize:vertical;min-height:90px;direction:rtl;outline:none}
+textarea:focus,input:focus{border-color:rgba(201,168,76,.5)!important}
+.row{display:flex;gap:10px;margin-top:11px;flex-wrap:wrap}
+input[type=text]{flex:1;min-width:140px;background:rgba(26,18,8,.65);border:1px solid rgba(201,168,76,.2);border-radius:10px;padding:10px 14px;color:var(--parchment);font-family:'Cairo',sans-serif;font-size:.88rem;direction:rtl;outline:none}
+.btn{background:linear-gradient(135deg,var(--gold-dim),var(--gold));color:var(--ink);border:none;border-radius:10px;padding:10px 26px;font-family:'Cairo',sans-serif;font-size:.93rem;font-weight:700;cursor:pointer;letter-spacing:1px;transition:all .2s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(201,168,76,.28)}
+.btn:disabled{background:#444;cursor:not-allowed;transform:none;box-shadow:none}
+.errmsg{background:rgba(139,58,26,.2);border:1px solid rgba(139,58,26,.4);border-radius:10px;padding:11px 15px;color:#E8A080;font-size:.86rem;margin-top:11px;display:none}
+.errmsg.show{display:block}
+
+/* loading */
+#loading{display:none;text-align:center;padding:44px}
+#loading.on{display:block}
+.spinner{width:44px;height:44px;border:2px solid rgba(201,168,76,.2);border-top-color:var(--gold);border-radius:50%;margin:0 auto 16px;animation:spin 1s linear infinite}
+.ldtxt{font-family:'Amiri',serif;font-size:1.05rem;color:#E8D9B8;animation:pulse 1.5s ease infinite}
+
+/* result */
+#result{display:none}
+#result.on{display:block;animation:pu .5s ease both}
+
+/* ayah display */
+.ayah-card{background:linear-gradient(135deg,rgba(27,94,66,.15),rgba(201,168,76,.08));border:1px solid rgba(201,168,76,.4);border-radius:14px;padding:26px 30px;text-align:center;margin-bottom:22px}
+.ayah-txt{font-family:'Amiri',serif;font-size:clamp(1.3rem,3.2vw,1.9rem);line-height:2.1;color:var(--cream);margin-bottom:10px}
+.ayah-ref{font-size:.84rem;color:var(--gold);letter-spacing:1px}
+
+/* section titles */
+.sec-title{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.sec-bar{width:4px;height:28px;border-radius:2px;flex-shrink:0}
+.sec-bar.gold{background:linear-gradient(to bottom,var(--gold),var(--gold-dim))}
+.sec-bar.green{background:linear-gradient(to bottom,#2E8B61,#0F3B28)}
+.sec-h2{font-family:'Amiri',serif;font-size:1.12rem;font-weight:700}
+.sec-h2.gold{color:var(--gold)}
+.sec-h2.green{color:#7EC8A0}
+.sec-line{flex:1;height:1px}
+.sec-line.gold{background:linear-gradient(to left,transparent,rgba(201,168,76,.3))}
+.sec-line.green{background:linear-gradient(to left,transparent,rgba(126,200,160,.3))}
+
+/* scholar opinion cards grid */
+.opinions-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-bottom:14px}
+.opinion-card{background:rgba(26,18,8,.52);border-radius:12px;overflow:hidden;border:1px solid rgba(201,168,76,.14);animation:ci .4s ease both}
+.opinion-hdr{padding:10px 16px;background:rgba(27,94,66,.25);display:flex;align-items:center;gap:9px}
+.opinion-dot{width:8px;height:8px;background:var(--gold);border-radius:50%;flex-shrink:0}
+.opinion-name{font-weight:700;font-size:.9rem;color:#7EC8A0}
+.opinion-body{padding:10px 16px 14px;font-size:.88rem;line-height:1.85;color:rgba(245,237,216,.85)}
+
+/* combined tafsir */
+.combined{background:linear-gradient(135deg,rgba(201,168,76,.12),rgba(27,94,66,.1));border:1px solid rgba(201,168,76,.35);border-radius:13px;padding:18px 22px;margin-bottom:22px;animation:ci .4s ease .35s both}
+.combined-title{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.combined-title span{font-weight:700;font-size:.95rem;color:var(--gold-light)}
+.combined-body{font-size:.95rem;line-height:1.95;color:rgba(245,237,216,.92)}
+
+/* tadabbur cards */
+.cards-grid{display:grid;gap:14px}
+.tcard{background:rgba(26,18,8,.52);border-radius:12px;overflow:hidden;border:1px solid rgba(201,168,76,.14);animation:ci .45s ease both}
+.tcard-hdr{padding:13px 20px;display:flex;align-items:center;gap:11px}
+.tcard-ico{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.08rem;flex-shrink:0}
+.tcard-ttl{font-weight:700;font-size:.97rem}
+.tcard-body{padding:0 20px 20px;font-size:.92rem;line-height:1.9;color:rgba(245,237,216,.85)}
+.tcard-body p{margin-top:13px}
+
+/* reset btn */
+.reset-wrap{text-align:center;margin:28px 0}
+.reset-btn{background:transparent;border:1px solid rgba(201,168,76,.3);border-radius:10px;padding:9px 26px;color:rgba(201,168,76,.7);font-family:'Cairo',sans-serif;font-size:.85rem;cursor:pointer}
+.reset-btn:hover{border-color:rgba(201,168,76,.6);color:var(--gold)}
+
+/* divider */
+.divider{display:flex;align-items:center;gap:13px;margin:28px 0}
+.divider span{flex:1;height:1px;background:linear-gradient(to left,transparent,rgba(201,168,76,.25),transparent)}
+.divider i{color:rgba(201,168,76,.4);font-size:1rem;font-style:normal}
+
+footer{text-align:center;padding-bottom:40px;color:rgba(245,237,216,.24);font-size:.76rem;line-height:1.9}
+
+strong.sch{color:var(--gold-light);font-weight:700}
+
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes pu{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes ci{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{opacity:.65}50%{opacity:1}}
+
+@media(max-width:580px){
+  .inbox{padding:18px}
+  .row{flex-direction:column}
+  .btn{width:100%}
+  .opinions-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</div>
+    <h1>منهج التدبر في آيات القرآن الكريم</h1>
+    <p class="sub">تفسير — تدبر — استنباط — عمل</p>
+  </div>
+
+  <!-- SCHOLARS -->
+  <div class="scholars">
+    <span class="stag">ابن كثير</span>
+    <span class="stag">السعدي</span>
+    <span class="stag">ابن عثيمين</span>
+    <span class="stag">ابن باز</span>
+    <span class="stag">الفوزان</span>
+    <span class="stag">ابن تيمية</span>
+    <span class="stag">ابن القيم</span>
+  </div>
+
+  <!-- INPUT -->
+  <div class="inbox">
+    <div class="inbox-lbl">أدخل الآية الكريمة</div>
+    <textarea id="ayahIn" placeholder="اكتب الآية الكريمة هنا...  ﴿ ﴾" rows="3"></textarea>
+    <div class="row">
+      <input type="text" id="surahIn" placeholder="السورة والآية — مثال: الفاتحة ٥">
+      <button class="btn" id="goBtn" onclick="analyze()">✦ تدبّر الآية</button>
+    </div>
+    <div class="errmsg" id="errMsg"></div>
+  </div>
+
+  <!-- LOADING -->
+  <div id="loading">
+    <div class="spinner"></div>
+    <div class="ldtxt" id="ldtxt">جارٍ التحليل...</div>
+  </div>
+
+  <!-- RESULT -->
+  <div id="result">
+
+    <!-- ayah -->
+    <div class="ayah-card">
+      <div class="ayah-txt" id="rAyah"></div>
+      <div class="ayah-ref" id="rRef"></div>
+    </div>
+
+    <!-- tafsir section -->
+    <div class="sec-title">
+      <div class="sec-bar gold"></div>
+      <h2 class="sec-h2 gold">📖 التفسير — أقوال العلماء</h2>
+      <div class="sec-line gold"></div>
+    </div>
+    <div class="opinions-grid" id="opinionsGrid"></div>
+    <div class="combined" id="combinedBox">
+      <div class="combined-title"><span>✦</span><span>القول الجامع — خلاصة التفسير</span></div>
+      <div class="combined-body" id="combinedBody"></div>
+    </div>
+
+    <!-- tadabbur section -->
+    <div class="sec-title">
+      <div class="sec-bar green"></div>
+      <h2 class="sec-h2 green">🔆 التدبر — الأحكام والعبر والتطبيق</h2>
+      <div class="sec-line green"></div>
+    </div>
+    <div class="cards-grid" id="cardsGrid"></div>
+
+    <div class="reset-wrap">
+      <button class="reset-btn" onclick="resetAll()">✦ تدبر آية جديدة</button>
+    </div>
+  </div>
+
+  <div class="divider"><span></span><i>❦</i><span></span></div>
+
+  <footer>
+    <p>﴿ أَفَلَا يَتَدَبَّرُونَ الْقُرْآنَ أَمْ عَلَىٰ قُلُوبٍ أَقْفَالُهَا ﴾</p>
+    <p style="margin-top:5px">سورة محمد — الآية ٢٤</p>
+  </footer>
+
+</div><!-- /wrap -->
+
+<script>
+// ── Themes for tadabbur cards ─────────────────────────────────────────────
+const THEMES = [
+  {hdr:'rgba(139,58,26,.35)',ico:'rgba(139,58,26,.6)',ttl:'#E8A080'},
+  {hdr:'rgba(201,168,76,.22)',ico:'rgba(201,168,76,.3)',ttl:'#E8C97A'},
+  {hdr:'rgba(70,60,100,.35)',ico:'rgba(70,60,100,.6)',ttl:'#B8A8E0'},
+  {hdr:'rgba(30,70,90,.35)',ico:'rgba(30,70,90,.6)',ttl:'#90C8E0'},
+  {hdr:'rgba(80,50,10,.5)',ico:'rgba(120,80,20,.6)',ttl:'#D4A860'},
+];
+const TADABBUR_KEYS = ['ahkam','ibar','dalail','tadabbur','amal'];
+
+// ── System prompts ────────────────────────────────────────────────────────
+const SYS_TAFSIR = `You are a Quran tafsir scholar. Given a Quranic verse, write a tafsir based on five scholars: Ibn Kathir, al-Saadi, Ibn Uthaymeen, Ibn Baz, Salih al-Fawzan.
+
+STRICT OUTPUT RULES:
+- Your entire response must be ONE JSON object only.
+- No text before {. No text after }.
+- No markdown. No backticks. No code fences.
+- Inside JSON strings use \\n\\n (literal backslash n backslash n) to separate paragraphs. NEVER use real line breaks inside strings.
+- Keep each scholar opinion under 60 words. Keep combined_tafsir under 100 words.
+
+Required JSON (fill only the content values, keep all keys exactly):
+{"scholars_opinions":{"ibn_kathir":{"name":"ابن كثير","content":"..."},"al_saadi":{"name":"السعدي","content":"..."},"ibn_uthaymeen":{"name":"ابن عثيمين","content":"..."},"ibn_baz":{"name":"ابن باز","content":"..."},"al_fawzan":{"name":"الفوزان","content":"..."}},"combined_tafsir":{"content":"..."}}`;
+
+const SYS_TADABBUR = `You are a Quran scholar producing tadabbur, citing Ibn Taymiyyah, Ibn al-Qayyim, Ibn Uthaymeen, Ibn Baz, al-Saadi.
+
+STRICT OUTPUT RULES:
+- Your entire response must be ONE JSON object only.
+- No text before {. No text after }.
+- No markdown. No backticks. No code fences.
+- Inside JSON strings use \\n\\n (literal backslash n backslash n) between paragraphs. NEVER use real line breaks.
+- Each content: 2 short paragraphs, max 65 words each.
+
+Required JSON:
+{"ahkam":{"title":"الأحكام الشرعية","icon":"⚖️","content":"فقرة1\\n\\nفقرة2"},"ibar":{"title":"العبر والدروس","icon":"💡","content":"فقرة1\\n\\nفقرة2"},"dalail":{"title":"الدلائل العقدية","icon":"🌟","content":"فقرة1\\n\\nفقرة2"},"tadabbur":{"title":"لطائف التدبر","icon":"🔍","content":"فقرة1\\n\\nفقرة2"},"amal":{"title":"التطبيق العملي","icon":"🤲","content":"فقرة1\\n\\nفقرة2"}}`;
+
+// ── Helpers ───────────────────────────────────────────────────────────────
+async function callAPI(system, userMsg) {
+  const resp = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({
+      model: 'claude-haiku-4-5-20251001',
+      max_tokens: 4000,
+      system: system,
+      messages: [{role:'user', content: userMsg}]
+    })
+  });
+  const data = await resp.json();
+  if (!resp.ok) throw new Error('HTTP ' + resp.status + ': ' + JSON.stringify(data).slice(0,150));
+  if (data.stop_reason === 'max_tokens') throw new Error('تم قطع الاستجابة — حاول مجدداً');
+
+  let raw = '';
+  if (Array.isArray(data.content))
+    for (const b of data.content)
+      if (b.type === 'text' && b.text) raw += b.text;
+
+  if (!raw.trim()) throw new Error('الاستجابة فارغة');
+  raw = raw.trim()
+    .replace(/^```(?:json)?\s*/i,'')
+    .replace(/\s*```\s*$/i,'')
+    .trim();
+
+  const s = raw.indexOf('{'), e = raw.lastIndexOf('}');
+  if (s < 0 || e < 0) throw new Error('لم يُعثر على JSON في الاستجابة');
+  return JSON.parse(raw.slice(s, e+1));
+}
+
+function hl(txt) {
+  return String(txt||'').replace(
+    /(ابن كثير|السعدي|ابن عثيمين|ابن باز|الفوزان|ابن تيمية|ابن القيم)/g,
+    '<strong class="sch">$1</strong>'
+  );
+}
+
+function renderParas(container, content) {
+  const paras = String(content||'')
+    .split(/\\n\\n|\n\n|\n/)
+    .map(p => p.replace(/\\n/g,' ').trim())
+    .filter(Boolean);
+  paras.forEach(p => {
+    const el = document.createElement('p');
+    el.innerHTML = hl(p);
+    container.appendChild(el);
+  });
+}
+
+// ── Main analyze function ─────────────────────────────────────────────────
+async function analyze() {
+  const ayah  = document.getElementById('ayahIn').value.trim();
+  const surah = document.getElementById('surahIn').value.trim();
+  const errEl = document.getElementById('errMsg');
+
+  errEl.className = 'errmsg';
+  if (!ayah) {
+    errEl.textContent = 'الرجاء إدخال نص الآية الكريمة أولاً';
+    errEl.className = 'errmsg show';
+    return;
+  }
+
+  document.getElementById('result').className = '';
+  document.getElementById('loading').className = 'on';
+  document.getElementById('goBtn').disabled = true;
+
+  const verse = 'الآية: ' + ayah + (surah ? ' — سورة: ' + surah : '');
+
+  try {
+    // 1) Tafsir call
+    document.getElementById('ldtxt').textContent = 'جارٍ جمع أقوال المفسّرين...';
+    const tafsirData = await callAPI(SYS_TAFSIR, verse);
+
+    // 2) Tadabbur call
+    document.getElementById('ldtxt').textContent = 'جارٍ استنباط الأحكام والعبر...';
+    const tadabburData = await callAPI(SYS_TADABBUR, verse);
+
+    renderResult(ayah, surah, tafsirData, tadabburData);
+
+  } catch(ex) {
+    document.getElementById('loading').className = '';
+    errEl.textContent = '⚠️ ' + ex.message;
+    errEl.className = 'errmsg show';
+  } finally {
+    document.getElementById('goBtn').disabled = false;
+  }
+}
+
+// ── Render ────────────────────────────────────────────────────────────────
+function renderResult(ayah, surah, tafsir, tadabbur) {
+  document.getElementById('loading').className = '';
+
+  // Ayah
+  document.getElementById('rAyah').textContent = '﴿ ' + ayah + ' ﴾';
+  document.getElementById('rRef').textContent = surah || '';
+
+  // Scholar opinions
+  const grid = document.getElementById('opinionsGrid');
+  grid.innerHTML = '';
+  const opinions = tafsir.scholars_opinions || {};
+  Object.values(opinions).forEach((s, i) => {
+    const card = document.createElement('div');
+    card.className = 'opinion-card';
+    card.style.animationDelay = (i * 0.07) + 's';
+    const body = document.createElement('div');
+    body.className = 'opinion-body';
+    renderParas(body, s.content);
+    card.innerHTML = `<div class="opinion-hdr"><div class="opinion-dot"></div><div class="opinion-name">${s.name||''}</div></div>`;
+    card.appendChild(body);
+    grid.appendChild(card);
+  });
+
+  // Combined tafsir
+  const combBody = document.getElementById('combinedBody');
+  combBody.innerHTML = '';
+  if (tafsir.combined_tafsir) renderParas(combBody, tafsir.combined_tafsir.content);
+
+  // Tadabbur cards
+  const cardsGrid = document.getElementById('cardsGrid');
+  cardsGrid.innerHTML = '';
+  TADABBUR_KEYS.forEach((k, i) => {
+    const item = tadabbur[k];
+    if (!item) return;
+    const th = THEMES[i];
+    const card = document.createElement('div');
+    card.className = 'tcard';
+    card.style.animationDelay = (i * 0.08) + 's';
+
+    const hdr = document.createElement('div');
+    hdr.className = 'tcard-hdr';
+    hdr.style.background = th.hdr;
+    hdr.innerHTML = `
+      <div class="tcard-ico" style="background:${th.ico}">${item.icon||'📌'}</div>
+      <div class="tcard-ttl" style="color:${th.ttl}">${item.title||k}</div>`;
+
+    const body = document.createElement('div');
+    body.className = 'tcard-body';
+    renderParas(body, item.content);
+
+    card.appendChild(hdr);
+    card.appendChild(body);
+    cardsGrid.appendChild(card);
+  });
+
+  document.getElementById('result').className = 'on';
+  document.getElementById('result').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function resetAll() {
+  document.getElementById('result').className = '';
+  document.getElementById('ayahIn').value = '';
+  document.getElementById('surahIn').value = '';
+  document.getElementById('errMsg').className = 'errmsg';
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+// Ctrl+Enter shortcut
+document.addEventListener('keydown', e => {
+  if (e.ctrlKey && e.key === 'Enter') analyze();
+});
+</script>
+</body>
+</html>
