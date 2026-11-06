@@ -3,158 +3,178 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#1A1208">
+<meta name="theme-color" content="#14573A">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="تدبّر">
+<meta name="description" content="تفسير الآيات وفوائدها من مصادر معتمدة">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icon.svg">
 <link rel="apple-touch-icon" href="icon.svg">
 <title>منهج التدبر في آيات القرآن الكريم</title>
-<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{
-  --gold:#C9A84C;--gold-l:#E8C97A;--gold-d:#8B6E2E;
-  --ink:#1A1208;--parch:#F5EDD8;--cream:#FAF5E9;
-  --ok-bg:rgba(27,94,66,.2);--ok-b:rgba(46,139,97,.4);--ok-t:#7EC8A0;
-  --warn-bg:rgba(180,100,0,.15);--warn-b:rgba(220,140,0,.4);--warn-t:#F0C060;
-  --err-bg:rgba(139,58,26,.18);--err-b:rgba(200,80,30,.4);--err-t:#E8A080;
+  --green-25:#f3fcf6;--green-50:#dff6e7;--green-100:#b8eacb;--green-600:#1b8354;--green-700:#166a45;--green-800:#14573a;
+  --lav-25:#f8f6fc;--lav-100:#e3dbf3;--lav-700:#654a9e;
+  --canvas:#f9fafb;--line:#e5e7eb;--line-2:#d2d6db;
+  --ink:#161616;--ink-2:#384250;--ink-muted:#6c737f;
+  --danger-ink:#b42318;--danger-tint:#fef3f2;
+  --warn-ink:#b54708;--warn-tint:#fffaeb;
+  --radius-card:1rem;
+  --shadow-card:0 1px 2px #1018280d,0 4px 16px -6px #10182814;
+  --shadow-raise:0 12px 32px -12px #14573a47;
+  --font-body:'IBM Plex Sans Arabic',system-ui,sans-serif;
+  --font-quran:'Amiri Quran','Amiri',serif;
 }
-body{font-family:'Cairo',sans-serif;background:var(--ink);color:var(--parch);min-height:100vh;direction:rtl;overflow-x:hidden;-webkit-font-smoothing:antialiased;padding-bottom:env(safe-area-inset-bottom)}
-body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
-  background:radial-gradient(ellipse at 20% 20%,rgba(201,168,76,.06) 0%,transparent 50%),
-             radial-gradient(ellipse at 80% 80%,rgba(27,94,66,.08) 0%,transparent 50%)}
-.wrap{max-width:820px;margin:0 auto;padding:0 16px;position:relative;z-index:1}
-a{color:var(--gold-l)}
+html{scroll-padding-top:5rem}
+body{font-family:var(--font-body);background:var(--canvas);color:var(--ink);min-height:100vh;direction:rtl;line-height:1.9;overflow-x:hidden;-webkit-font-smoothing:antialiased;padding-bottom:env(safe-area-inset-bottom)}
+a{color:var(--green-700)}
+.wrap{max-width:760px;margin:0 auto;padding:0 16px}
 
-.hdr{text-align:center;padding:calc(34px + env(safe-area-inset-top)) 0 18px}
-.bismillah{font-family:'Amiri',serif;font-size:clamp(1.4rem,5vw,1.9rem);color:var(--gold);margin-bottom:12px}
-h1{font-family:'Amiri',serif;font-size:clamp(1.3rem,4vw,2.2rem);color:var(--gold);line-height:1.5}
-.sub{color:#E8D9B8;font-size:.8rem;letter-spacing:2px;margin:4px 0 12px}
-.trust{display:inline-flex;align-items:center;gap:7px;background:var(--ok-bg);border:1px solid var(--ok-b);border-radius:9px;padding:7px 14px;font-size:.76rem;color:var(--ok-t)}
+/* top bar */
+.topbar{position:sticky;top:0;z-index:30;background:#fff;border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top)}
+.topbar .wrap{display:flex;align-items:center;gap:10px;height:60px}
+.logo{width:36px;height:36px;border-radius:10px;background:var(--green-800);display:grid;place-items:center;flex-shrink:0}
+.brand{font-weight:700;font-size:1.05rem;color:var(--green-800)}
 
-/* input */
-.inbox{background:linear-gradient(135deg,rgba(201,168,76,.07),rgba(27,94,66,.04));border:1px solid rgba(201,168,76,.28);border-radius:14px;padding:18px;margin:18px 0}
-.tabs{display:flex;gap:6px;margin-bottom:14px}
-.tab{flex:1;background:rgba(26,18,8,.5);border:1px solid rgba(201,168,76,.18);border-radius:9px;padding:10px 6px;font-family:inherit;font-size:.82rem;color:rgba(245,237,216,.55);cursor:pointer}
-.tab.active{background:rgba(201,168,76,.15);border-color:rgba(201,168,76,.45);color:var(--gold-l);font-weight:700}
-.field{margin-bottom:11px}
-.field label{display:block;font-size:.72rem;color:rgba(201,168,76,.7);margin-bottom:5px}
-input,select{width:100%;background:rgba(26,18,8,.65);border:1px solid rgba(201,168,76,.2);border-radius:9px;padding:11px 13px;color:var(--parch);font-family:inherit;font-size:16px;direction:rtl;outline:none;-webkit-appearance:none}
-input:focus,select:focus{border-color:rgba(201,168,76,.5)}
-input::placeholder{color:rgba(245,237,216,.3)}
-select option{background:#1A1208}
+/* hero */
+.hero{position:relative;overflow:hidden;background:var(--green-800);color:#fff;text-align:center;padding:38px 16px 64px}
+.hero::before{content:'';position:absolute;inset:0;opacity:.08;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cpath d='M24 4l5.9 14.1L44 24l-14.1 5.9L24 44l-5.9-14.1L4 24l14.1-5.9z' fill='none' stroke='%23fff' stroke-width='1.2'/%3E%3C/svg%3E")}
+.hero>*{position:relative}
+.bismillah{font-family:var(--font-quran);font-size:clamp(1.5rem,5vw,2rem);margin-bottom:10px;opacity:.95}
+h1{font-size:clamp(1.35rem,4.5vw,2rem);font-weight:700;line-height:1.5}
+.sub{font-size:.9rem;opacity:.8;margin-top:4px}
+
+/* search panel */
+.panel{background:#fff;border:1px solid var(--line);border-radius:var(--radius-card);box-shadow:var(--shadow-raise);padding:18px;margin:-40px 0 20px;position:relative}
+.tabs{display:flex;gap:6px;background:var(--canvas);border:1px solid var(--line);border-radius:999px;padding:4px;margin-bottom:14px}
+.tab{flex:1;background:transparent;border:none;border-radius:999px;padding:9px 6px;font-family:inherit;font-size:.9rem;color:var(--ink-2);cursor:pointer;min-height:42px}
+.tab.active{background:var(--green-700);color:#fff;font-weight:600}
+.field{margin-bottom:12px}
+.field label{display:block;font-size:.82rem;color:var(--ink-2);font-weight:500;margin-bottom:5px}
+input,select{width:100%;background:#fff;border:1px solid var(--line-2);border-radius:12px;padding:11px 13px;color:var(--ink);font-family:inherit;font-size:16px;direction:rtl;outline:none;-webkit-appearance:none;min-height:48px}
+input:focus,select:focus{border-color:var(--green-600);box-shadow:0 0 0 3px var(--green-50)}
+input::placeholder{color:#9aa1ab}
 .grid2{display:grid;grid-template-columns:2fr 1fr;gap:10px}
-.btn{width:100%;background:linear-gradient(135deg,var(--gold-d),var(--gold));color:var(--ink);border:none;border-radius:10px;padding:13px;font-family:inherit;font-size:1rem;font-weight:700;cursor:pointer}
-.btn:disabled{background:#444;color:#999}
-.errmsg{background:var(--err-bg);border:1px solid var(--err-b);border-radius:9px;padding:10px 14px;color:var(--err-t);font-size:.85rem;margin-top:10px;display:none}
+.btn{width:100%;background:var(--green-700);color:#fff;border:none;border-radius:999px;padding:13px;font-family:inherit;font-size:1rem;font-weight:600;cursor:pointer;min-height:50px;transition:background .2s}
+.btn:hover{background:var(--green-800)}
+.btn:active{transform:scale(.98)}
+.btn:disabled{background:var(--line-2);color:var(--ink-muted)}
+.errmsg{background:var(--danger-tint);border:1px solid #fecdca;border-radius:12px;padding:10px 14px;color:var(--danger-ink);font-size:.88rem;margin-top:10px;display:none}
 .errmsg.show{display:block}
 
-/* search results */
-.results{display:none;margin-bottom:11px;max-height:300px;overflow-y:auto;border:1px solid rgba(201,168,76,.18);border-radius:10px}
+.results{display:none;margin-bottom:12px;max-height:320px;overflow-y:auto;border:1px solid var(--line);border-radius:12px}
 .results.show{display:block}
-.res{padding:10px 13px;border-bottom:1px solid rgba(201,168,76,.1);cursor:pointer}
+.res{padding:10px 14px;border-bottom:1px solid var(--line);cursor:pointer}
 .res:last-child{border-bottom:none}
-.res:hover,.res.sel{background:rgba(201,168,76,.12)}
-.res-ref{font-size:.72rem;color:var(--gold)}
-.res-txt{font-family:'Amiri',serif;font-size:1.05rem;line-height:1.8}
-.hint{font-size:.72rem;color:rgba(245,237,216,.4);margin-top:-4px;margin-bottom:10px}
+.res:hover,.res.sel{background:var(--green-25)}
+.res-ref{font-size:.78rem;color:var(--green-700);font-weight:600}
+.res-txt{font-family:var(--font-quran);font-size:1.1rem;line-height:2}
+.hint{font-size:.78rem;color:var(--ink-muted);margin-top:-6px;margin-bottom:10px}
 
-/* settings */
-details.settings{margin-top:12px;border-top:1px solid rgba(201,168,76,.12);padding-top:10px}
-details.settings summary{font-size:.78rem;color:rgba(201,168,76,.7);cursor:pointer;list-style:none}
-details.settings summary::before{content:'⚙️ '}
-.note{font-size:.7rem;color:rgba(245,237,216,.4);line-height:1.7;margin-top:6px}
+details.settings{margin-top:14px;border-top:1px solid var(--line);padding-top:10px}
+details.settings summary{font-size:.82rem;color:var(--ink-muted);cursor:pointer}
+.note{font-size:.78rem;color:var(--ink-muted);line-height:1.7;margin-top:6px}
 
-/* loading */
 #loading{display:none;text-align:center;padding:30px}
 #loading.on{display:block}
-.spin{width:40px;height:40px;border:2px solid rgba(201,168,76,.18);border-top-color:var(--gold);border-radius:50%;margin:0 auto 12px;animation:spin 1s linear infinite}
-.ldtxt{font-family:'Amiri',serif;color:#E8D9B8}
+.spin{width:38px;height:38px;border:3px solid var(--green-50);border-top-color:var(--green-700);border-radius:50%;margin:0 auto 12px;animation:spin 1s linear infinite}
+.ldtxt{color:var(--ink-2)}
 
-/* result */
 #result{display:none}
-#result.on{display:block;animation:pu .4s ease both}
-.ayah-card{background:linear-gradient(135deg,rgba(27,94,66,.14),rgba(201,168,76,.07));border:1px solid rgba(201,168,76,.38);border-radius:13px;padding:22px 18px;text-align:center;margin-bottom:12px}
-.ayah-txt{font-family:'Amiri',serif;font-size:clamp(1.3rem,4vw,1.9rem);line-height:2.1;color:var(--cream)}
-.ayah-ref{font-size:.82rem;color:var(--gold);margin-top:6px}
+#result.on{display:block;animation:pu .3s cubic-bezier(.22,.61,.36,1) both}
+.ayah-card{background:#fff;border:1px solid var(--line);border-top:4px solid var(--green-700);border-radius:var(--radius-card);box-shadow:var(--shadow-card);padding:24px 18px;text-align:center;margin-bottom:12px}
+.ayah-txt{font-family:var(--font-quran);font-size:clamp(1.45rem,4.5vw,2rem);line-height:2.3;color:var(--ink)}
+.ayah-ref{display:inline-block;margin-top:10px;background:var(--green-25);color:var(--green-800);border:1px solid var(--green-100);border-radius:999px;padding:3px 14px;font-size:.85rem;font-weight:600}
 .nav{display:flex;gap:8px;margin-bottom:6px}
-.nav button{flex:1;background:transparent;border:1px solid rgba(201,168,76,.25);border-radius:9px;padding:9px;color:var(--gold-l);font-family:inherit;font-size:.82rem;cursor:pointer}
+.nav button{flex:1;background:#fff;border:1px solid var(--line-2);border-radius:999px;padding:9px;color:var(--green-800);font-family:inherit;font-size:.9rem;cursor:pointer;min-height:46px}
+.nav button:hover{border-color:var(--green-600);background:var(--green-25)}
 
-.sec{display:flex;align-items:center;gap:10px;margin:22px 0 12px}
-.sec-bar{width:4px;height:24px;border-radius:2px}
-.sec h2{font-family:'Amiri',serif;font-size:1.08rem}
-.sec-line{flex:1;height:1px;background:linear-gradient(to left,transparent,rgba(201,168,76,.25))}
-.banner{border-radius:10px;padding:10px 14px;font-size:.8rem;line-height:1.7;margin-bottom:12px}
-.banner.ok{background:var(--ok-bg);border:1px solid var(--ok-b);color:var(--ok-t)}
-.banner.warn{background:var(--warn-bg);border:1px solid var(--warn-b);color:var(--warn-t)}
+.sec{display:flex;align-items:center;gap:10px;margin:26px 0 12px}
+.sec-ico{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;font-size:1.05rem;flex-shrink:0;background:var(--green-25);color:var(--green-700);box-shadow:inset 0 0 0 1px var(--green-100)}
+.sec h2{font-size:1.15rem;font-weight:700;color:var(--ink)}
 
-.card{background:rgba(26,18,8,.55);border-radius:12px;overflow:hidden;border:1px solid rgba(201,168,76,.14);margin-bottom:11px}
-.card-hdr{padding:10px 15px;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
-.card-name{font-weight:700;font-size:.92rem}
-.card-book{font-size:.66rem;color:rgba(230,230,230,.45)}
-.card-body{padding:12px 15px 14px;font-family:'Amiri',serif;font-size:1.02rem;line-height:1.95;color:rgba(245,237,216,.9)}
-.card-body p+p{margin-top:8px}
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--radius-card);box-shadow:var(--shadow-card);overflow:hidden;margin-bottom:12px;transition:border-color .3s,box-shadow .3s}
+.card:hover{border-color:var(--green-600)}
+.card-hdr{padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;border-bottom:1px solid var(--line)}
+.card-name{font-weight:700;font-size:1rem;color:var(--green-800);display:flex;align-items:center;gap:8px}
+.card-name::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--green-600)}
+.card-book{font-size:.75rem;color:var(--ink-muted)}
+.card-body{padding:14px 16px 16px;font-size:1rem;line-height:2;color:var(--ink-2)}
 .card-body .txt{white-space:pre-line}
-.badge{display:inline-block;background:var(--ok-bg);border:1px solid var(--ok-b);border-radius:4px;padding:1px 7px;font-family:'Cairo';font-size:.64rem;color:var(--ok-t);margin-bottom:8px}
-.more{font-family:'Cairo';font-size:.75rem;color:var(--gold);background:none;border:none;cursor:pointer;margin-top:6px}
-.src-link{display:inline-block;font-family:'Cairo';font-size:.7rem;color:rgba(201,168,76,.6);margin-top:8px}
+.more{display:inline-flex;font-family:inherit;font-size:.85rem;font-weight:600;color:var(--green-700);background:var(--green-25);border:1px solid var(--green-100);border-radius:999px;padding:4px 14px;cursor:pointer;margin-top:8px}
+.src-link{display:inline-block;font-size:.75rem;color:var(--ink-muted);margin-top:10px;text-decoration:none}
+.src-link:hover{color:var(--green-700)}
 .fawaid{list-style:none}
-.fawaid li{position:relative;padding-right:18px;margin-bottom:8px}
-.fawaid li::before{content:'◆';position:absolute;right:0;top:2px;color:var(--gold);font-size:.7rem}
-.unavail{font-family:'Cairo';font-size:.8rem;color:rgba(245,237,216,.35)}
+.fawaid li{position:relative;padding-right:22px;margin-bottom:10px}
+.fawaid li::before{content:'';position:absolute;right:2px;top:.75em;width:8px;height:8px;border-radius:2px;background:var(--green-600);transform:rotate(45deg)}
+.unavail{font-size:.88rem;color:var(--ink-muted)}
 
-.ai-card .card-body{font-family:'Cairo';font-size:.9rem}
-.ai-warn{background:var(--warn-bg);border:1px solid var(--warn-b);border-radius:7px;padding:8px 11px;margin-top:10px;font-family:'Cairo';font-size:.74rem;color:var(--warn-t);line-height:1.6}
-.ai-btn{width:100%;background:transparent;border:1px dashed rgba(240,192,96,.45);border-radius:10px;padding:12px;color:var(--warn-t);font-family:inherit;font-size:.88rem;cursor:pointer}
+.ai-card .card-hdr{background:var(--warn-tint)}
+.ai-card .card-name{color:var(--warn-ink)}
+.ai-card .card-name::before{background:var(--warn-ink)}
+.banner.warn{background:var(--warn-tint);border:1px solid #fedf89;color:var(--warn-ink);border-radius:12px;padding:10px 14px;font-size:.86rem;line-height:1.7;margin-bottom:12px}
+.ai-warn{background:var(--warn-tint);border-radius:10px;padding:8px 12px;margin-top:10px;font-size:.8rem;color:var(--warn-ink);line-height:1.6}
+.ai-btn{width:100%;background:#fff;border:1px dashed #fec84b;border-radius:999px;padding:12px;color:var(--warn-ink);font-family:inherit;font-size:.92rem;cursor:pointer;min-height:48px}
 
-.refs{display:flex;flex-wrap:wrap;gap:7px}
-.refs a{background:rgba(70,60,100,.22);border:1px solid rgba(140,120,200,.3);border-radius:8px;padding:6px 11px;font-size:.75rem;color:#C8B8F0;text-decoration:none}
-
-footer{text-align:center;padding:26px 0 36px;color:rgba(245,237,216,.25);font-size:.7rem;line-height:1.9}
+footer{position:relative;overflow:hidden;background:var(--green-800);color:#fff;text-align:center;padding:30px 16px 40px;margin-top:36px;font-size:.8rem;line-height:1.9}
+footer p{opacity:.8}
+footer .verse{font-family:var(--font-quran);font-size:1.25rem;opacity:1;margin-bottom:8px}
+footer a{color:#fff}
 @keyframes spin{to{transform:rotate(360deg)}}
-@keyframes pu{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes pu{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media(max-width:420px){.grid2{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body>
-<div class="wrap">
 
-<header class="hdr">
-  <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</div>
-  <h1>منهج التدبر في آيات القرآن الكريم</h1>
-  <p class="sub">تفسير موثّق — فوائد الآيات — تدبر وعمل</p>
-  <div class="trust">✓ المحتوى من جمعية خدمة المحتوى الإسلامي ومصادر معتمدة</div>
+<header class="topbar">
+  <div class="wrap">
+    <div class="logo"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"><path d="M12 6c-2.6-1.6-5.6-2-8-1.5v13c2.4-.5 5.4-.1 8 1.5 2.6-1.6 5.6-2 8-1.5v-13C17.6 4 14.6 4.4 12 6z"/><path d="M12 6v13"/></svg></div>
+    <span class="brand">تدبّر</span>
+  </div>
 </header>
 
-<section class="inbox">
+<section class="hero">
+  <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</div>
+  <h1>منهج التدبر في آيات القرآن الكريم</h1>
+  <p class="sub">تفسير الآيات وفوائدها من مصادر معتمدة</p>
+</section>
+
+<div class="wrap">
+<section class="panel">
   <div class="tabs">
-    <button class="tab active" id="tabName" onclick="setMode('name')">📖 السورة والآية</button>
-    <button class="tab" id="tabText" onclick="setMode('text')">✏️ نص الآية</button>
+    <button class="tab active" id="tabName" onclick="setMode('name')">السورة والآية</button>
+    <button class="tab" id="tabText" onclick="setMode('text')">نص الآية</button>
   </div>
 
   <div id="modeName">
     <div class="grid2">
-      <div class="field"><label>السورة</label><select id="surahSel"></select></div>
-      <div class="field"><label>رقم الآية</label><input type="number" inputmode="numeric" id="ayahNum" min="1" placeholder="5"></div>
+      <div class="field"><label for="surahSel">السورة</label><select id="surahSel"></select></div>
+      <div class="field"><label for="ayahNum">رقم الآية</label><input type="number" inputmode="numeric" id="ayahNum" min="1" placeholder="5"></div>
     </div>
   </div>
 
   <div id="modeText" style="display:none">
-    <div class="field"><label>اكتب الآية أو جزءاً منها</label>
+    <div class="field"><label for="ayahQuery">اكتب الآية أو جزءاً منها</label>
       <input type="search" id="ayahQuery" placeholder="مثال: اياك نعبد واياك نستعين" autocomplete="off">
     </div>
     <div class="hint">لا يلزم التشكيل ولا الهمزات — اختر الآية من النتائج</div>
     <div class="results" id="results"></div>
   </div>
 
-  <button class="btn" id="goBtn" onclick="go()">✦ تدبّر الآية</button>
+  <button class="btn" id="goBtn" onclick="go()">تدبّر الآية</button>
   <div class="errmsg" id="err"></div>
 
   <details class="settings">
     <summary>إعدادات متقدمة (اختياري)</summary>
     <div class="field" style="margin-top:10px">
-      <label>مفتاح Anthropic API — لتفعيل «التأمل بالذكاء الاصطناعي» فقط</label>
+      <label for="apiKey">مفتاح Anthropic API — لتفعيل «التأمل بالذكاء الاصطناعي» فقط</label>
       <input type="password" id="apiKey" placeholder="sk-ant-..." oninput="saveKey(this.value)" autocomplete="off">
     </div>
     <div class="note">التفسير والفوائد تعمل بدون مفتاح. المفتاح يُحفظ في جهازك فقط ولا يُضمَّن في الصفحة.</div>
@@ -169,39 +189,32 @@ footer{text-align:center;padding:26px 0 36px;color:rgba(245,237,216,.25);font-si
     <div class="ayah-ref" id="rRef"></div>
   </div>
   <div class="nav">
-    <button onclick="step(1)">الآية التالية ←</button>
     <button onclick="step(-1)">→ الآية السابقة</button>
+    <button onclick="step(1)">الآية التالية ←</button>
   </div>
 
-  <div class="sec"><div class="sec-bar" style="background:var(--gold)"></div><h2 style="color:var(--gold)">📖 التفسير — نصوص موثّقة</h2><div class="sec-line"></div></div>
-  <div class="banner ok">✅ نصوص منقولة حرفياً من مصادرها — لم يكتبها الذكاء الاصطناعي ولم يعدّلها.</div>
+  <div class="sec"><div class="sec-ico">📖</div><h2>التفسير</h2></div>
   <div id="tafsirList"></div>
 
   <div id="fawaidWrap" style="display:none">
-    <div class="sec"><div class="sec-bar" style="background:#2E8B61"></div><h2 style="color:var(--ok-t)" id="fawaidTitle">💡 من فوائد الآيات</h2><div class="sec-line"></div></div>
+    <div class="sec"><div class="sec-ico">💡</div><h2 id="fawaidTitle">من فوائد الآيات</h2></div>
     <div id="fawaidBox"></div>
   </div>
 
-  <div class="sec"><div class="sec-bar" style="background:#8C78C8"></div><h2 style="color:#C8B8F0">🔗 للتوسع عند ابن عثيمين وابن باز والفوزان</h2><div class="sec-line"></div></div>
-  <div class="banner" style="background:rgba(70,60,100,.18);border:1px solid rgba(140,120,200,.3);color:rgba(210,200,245,.85)">
-    تفاسير هؤلاء العلماء غير منشورة رقمياً آية بآية، فنحيلك إلى مواقعهم الرسمية للبحث في كلامهم عن هذه الآية بدل أن ننسب إليهم ما لم يقولوه.
-  </div>
-  <div class="refs" id="refs"></div>
-
   <div id="aiWrap" style="display:none">
-    <div class="sec"><div class="sec-bar" style="background:#D4A020"></div><h2 style="color:var(--warn-t)">🤖 تأمّل مساعد بالذكاء الاصطناعي</h2><div class="sec-line"></div></div>
-    <div class="banner warn"><strong>تنبيه:</strong> هذا القسم يولّده الذكاء الاصطناعي اعتماداً على النصوص الموثّقة أعلاه فقط. <strong>ليس تفسيراً معتمداً ولا فتوى</strong> — المرجع هو النصوص الأصلية وأهل العلم.</div>
-    <div id="aiBox"><button class="ai-btn" onclick="runAI()">✦ اطلب تأمّلاً مساعداً (اختياري)</button></div>
+    <div class="sec"><div class="sec-ico" style="background:var(--warn-tint);color:var(--warn-ink);box-shadow:inset 0 0 0 1px #fedf89">🤖</div><h2>تأمّل مساعد بالذكاء الاصطناعي</h2></div>
+    <div class="banner warn"><strong>تنبيه:</strong> هذا القسم يولّده الذكاء الاصطناعي اعتماداً على النصوص أعلاه فقط. <strong>ليس تفسيراً معتمداً ولا فتوى</strong> — المرجع هو النصوص الأصلية وأهل العلم.</div>
+    <div id="aiBox"><button class="ai-btn" onclick="runAI()">اطلب تأمّلاً مساعداً (اختياري)</button></div>
   </div>
 </main>
+</div>
 
 <footer>
-  <p>﴿ أَفَلَا يَتَدَبَّرُونَ الْقُرْآنَ ﴾ — محمد ٢٤</p>
-  <p>المصادر: <a href="https://quranenc.com" target="_blank">موسوعة القرآن الكريم QuranEnc</a> — جمعية خدمة المحتوى الإسلامي باللغات • مجمع الملك فهد • مركز تفسير</p>
-  <p>وفق شروط QuranEnc.com: يُعرض المحتوى دون تعديل أو إضافة أو حذف، مع ذكر الناشر والمصدر (QuranEnc.com) ورقم الإصدار بجوار كل نص.</p>
-  <p>ابن كثير والسعدي: نصوص quran.com عبر jsDelivr • نص المصحف: alquran.cloud</p>
+  <p class="verse">﴿ أَفَلَا يَتَدَبَّرُونَ الْقُرْآنَ ﴾</p>
+  <p>المصادر: <a href="https://quranenc.com" target="_blank" rel="noopener">موسوعة القرآن الكريم QuranEnc</a> — جمعية خدمة المحتوى الإسلامي باللغات • مجمع الملك فهد • مركز تفسير</p>
+  <p>وفق شروط QuranEnc.com: يُعرض المحتوى دون تعديل أو إضافة أو حذف، مع ذكر الناشر والمصدر ورقم الإصدار بجوار كل نص.</p>
+  <p>ابن كثير والسعدي: نصوص quran.com • نص المصحف: alquran.cloud</p>
 </footer>
-</div>
 
 <script>
 /* ═══════════ الإعدادات ═══════════ */
@@ -346,7 +359,7 @@ function loadFawaid(){
 async function load(s,a){
   current={s,a}; const name=SURAHS[s-1].name;
   $('result').classList.remove('on'); $('loading').classList.add('on');
-  $('ldtxt').textContent='جارٍ جلب التفاسير الموثّقة...'; $('goBtn').disabled=true;
+  $('ldtxt').textContent='جارٍ جلب التفسير...'; $('goBtn').disabled=true;
   history.replaceState(null,'',`?s=${s}&a=${a}`);
 
   const [qe, cdn, uth, fw] = await Promise.all([
@@ -379,23 +392,14 @@ async function load(s,a){
   // «من فوائد الآيات» — فوائد صفحة المصحف التي فيها الآية، من المختصر (نص حرفي)
   const page=fw?.ayahToPage?.[`${s}:${a}`], items=page?fw.pages?.[page]:null;
   if(items&&items.length){
-    $('fawaidTitle').textContent=`💡 من فوائد الآيات (صفحة المصحف رقم ${page})`;
-    $('fawaidBox').innerHTML=`<div class="card"><div class="card-hdr" style="background:rgba(27,94,66,.28)"><span class="card-name" style="color:var(--ok-t)">المختصر في تفسير القرآن الكريم</span><span class="card-book">مركز تفسير للدراسات القرآنية</span></div><div class="card-body"><span class="badge">📚 نص أصلي موثّق</span><ul class="fawaid">${items.map(x=>`<li>${esc(x)}</li>`).join('')}</ul><a class="src-link" href="https://quranenc.com/ar/browse/arabic_mokhtasar/${s}/${a}" target="_blank" rel="noopener">المصدر: QuranEnc.com${fw.version?` — الإصدار ${esc(fw.version)}`:''} ↗</a></div></div>`;
+    $('fawaidTitle').textContent=`من فوائد الآيات (صفحة المصحف ${page})`;
+    $('fawaidBox').innerHTML=`<div class="card"><div class="card-hdr"><span class="card-name">المختصر في تفسير القرآن الكريم</span><span class="card-book">مركز تفسير للدراسات القرآنية</span></div><div class="card-body"><ul class="fawaid">${items.map(x=>`<li>${esc(x)}</li>`).join('')}</ul><a class="src-link" href="https://quranenc.com/ar/browse/arabic_mokhtasar/${s}/${a}" target="_blank" rel="noopener">QuranEnc.com${fw.version?` — الإصدار ${esc(fw.version)}`:''} ↗</a></div></div>`;
     $('fawaidWrap').style.display='block';
   } else $('fawaidWrap').style.display='none';
 
-  // روابط العلماء
-  const q=encodeURIComponent(`تفسير قوله تعالى ${(arabic||'').split(' ').slice(0,6).join(' ')}`);
-  $('refs').innerHTML=[
-    ['ابن عثيمين — الموقع الرسمي',`https://www.google.com/search?q=site:binothaimeen.net+${q}`],
-    ['ابن باز — الموقع الرسمي',`https://www.google.com/search?q=site:binbaz.org.sa+${q}`],
-    ['الفوزان — الموقع الرسمي',`https://www.google.com/search?q=site:alfawzan.af.org.sa+${q}`],
-    ['الدرر السنية — التفسير',`https://dorar.net/tafseer/${s}/${a}`],
-  ].map(([t,u])=>`<a href="${u}" target="_blank" rel="noopener">↗ ${t}</a>`).join('');
-
   // التأمل المساعد
   $('aiWrap').style.display = (getKey() && lastTexts.length) ? 'block':'none';
-  $('aiBox').innerHTML='<button class="ai-btn" onclick="runAI()">✦ اطلب تأمّلاً مساعداً (اختياري)</button>';
+  $('aiBox').innerHTML='<button class="ai-btn" onclick="runAI()">اطلب تأمّلاً مساعداً (اختياري)</button>';
 
   $('loading').classList.remove('on'); $('goBtn').disabled=false;
   if(!lastTexts.length) err('تعذّر جلب التفاسير — تحقق من الاتصال بالإنترنت');
@@ -405,9 +409,9 @@ async function load(s,a){
 
 function card(name,book,color,text,link,linkName){
   const body = text
-    ? `<span class="badge">📚 نص أصلي موثّق</span><div class="txt" data-full="${esc(text)}">${esc(text.length>600?text.slice(0,600)+'…':text)}</div>${text.length>600?'<button class="more">عرض النص كاملاً</button>':''}<br><a class="src-link" href="${link}" target="_blank" rel="noopener">المصدر: ${linkName} ↗</a>`
+    ? `<div class="txt" data-full="${esc(text)}">${esc(text.length>600?text.slice(0,600)+'…':text)}</div>${text.length>600?'<button class="more">عرض النص كاملاً</button>':''}<br><a class="src-link" href="${link}" target="_blank" rel="noopener">${linkName} ↗</a>`
     : `<span class="unavail">تعذّر جلب هذا التفسير لهذه الآية — <a href="${link}" target="_blank" rel="noopener">افتحه من المصدر</a></span>`;
-  return `<div class="card"><div class="card-hdr" style="background:rgba(201,168,76,.08)"><span class="card-name" style="color:${color}">${name}</span><span class="card-book">${book}</span></div><div class="card-body">${body}</div></div>`;
+  return `<div class="card"><div class="card-hdr"><span class="card-name">${name}</span><span class="card-book">${book}</span></div><div class="card-body">${body}</div></div>`;
 }
 function bindMore(){
   document.querySelectorAll('.more').forEach(b=>b.onclick=()=>{
@@ -430,7 +434,7 @@ async function runAI(){
     const txt=(d.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('');
     const parts=txt.split(/^##\s*/m).map(x=>x.trim()).filter(Boolean);
     $('aiBox').innerHTML=parts.map(p=>{const [h,...rest]=p.split('\n');
-      return `<div class="card ai-card"><div class="card-hdr" style="background:rgba(180,100,0,.15)"><span class="card-name" style="color:var(--warn-t)">${esc(h)}</span></div><div class="card-body">${esc(rest.join(' ').trim())}<div class="ai-warn">⚠️ مولَّد بالذكاء الاصطناعي من النصوص أعلاه — ليس تفسيراً معتمداً ولا فتوى</div></div></div>`;}).join('');
+      return `<div class="card ai-card"><div class="card-hdr"><span class="card-name">${esc(h)}</span></div><div class="card-body">${esc(rest.join(' ').trim())}<div class="ai-warn">⚠️ مولَّد بالذكاء الاصطناعي من النصوص أعلاه — ليس تفسيراً معتمداً ولا فتوى</div></div></div>`;}).join('');
   }catch(e){
     $('aiBox').innerHTML=`<div class="errmsg show">تعذّر التوليد: ${esc(e.message)}</div>`;
   }

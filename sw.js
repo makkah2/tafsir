@@ -1,5 +1,5 @@
 // خدمة العمل: تحفظ واجهة التطبيق ونص المصحف للعمل بدون إنترنت
-const CACHE = 'tadabbur-v2';
+const CACHE = 'tadabbur-v3';
 const SHELL = ['./', './index.html', './manifest.json', './icon.svg', './data/fawaid.json'];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)).then(() => self.skipWaiting()));
