@@ -1,0 +1,15 @@
+{
+  "name": "منهج التدبر في آيات القرآن الكريم",
+  "short_name": "تدبّر",
+  "description": "تفسير موثّق من مصادر معتمدة مع فوائد الآيات",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "dir": "rtl",
+  "lang": "ar",
+  "background_color": "#1A1208",
+  "theme_color": "#1A1208",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
